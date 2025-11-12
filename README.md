@@ -101,8 +101,8 @@ Below are the derived metrics visualised in the app.
 
 **Aggressiveness**
 
-$$
-\text{Aggressiveness\_Score} = 
+```math
+\text{Aggressiveness\_Score} =
 0.25 \left( \frac{\text{avg\_throttle}}{100} \right)
 + 0.15 \, \max\!\left(0.1, 1 - \frac{\text{tyre\_life}}{\text{expected\_tyre\_life}}\right)
 + 0.2 \left( \frac{1}{\text{normalized\_corrected\_lap\_times}} \right)
@@ -111,7 +111,7 @@ $$
 + 0.3
 + 0.05 \left(1 - \text{brake\_on\_time\_ratio}\right)
 + 0.15 \, \min\!\left(1.0, 1 - \frac{\text{position} - 1}{\text{total\_drivers}}\right)
-$$
+```
 
 
 **Confidence**
