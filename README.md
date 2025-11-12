@@ -100,7 +100,19 @@ Outputs:
 Below are the derived metrics visualised in the app.
 
 **Aggressiveness**
-![Aggressiveness logic](public/aggressiveness_logic.webp)
+
+$$
+\text{Aggressiveness\_Score} = 
+0.25 \left( \frac{\text{avg\_throttle}}{100} \right)
++ 0.15 \, \max\!\left(0.1, 1 - \frac{\text{tyre\_life}}{\text{expected\_tyre\_life}}\right)
++ 0.2 \left( \frac{1}{\text{normalized\_corrected\_lap\_times}} \right)
++ 0.2 \, e^{\frac{\text{avg\_distance\_to\_drive\_ahead}}{10}}
++ 0.15 \, \frac{\min\!\left(1.0, 2 \times \text{DRS\_usage\_count}\right)}{\text{max\_possible\_DRS}}
++ 0.3
++ 0.05 \left(1 - \text{brake\_on\_time\_ratio}\right)
++ 0.15 \, \min\!\left(1.0, 1 - \frac{\text{position} - 1}{\text{total\_drivers}}\right)
+$$
+
 
 **Confidence**
 ![Confidence logic](public/confidence_logic.webp)
