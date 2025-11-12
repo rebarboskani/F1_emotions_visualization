@@ -114,11 +114,8 @@ Below are the derived metrics visualised in the app.
 **Risk Taking**
 ![Risk-taking logic](public/risk_taking_logic.webp)
 
+**Extra**
+![Detailed Calculations](public/Extra.webp)
+
 
 ---
-
-### Sharing & Deployment Notes
-
-- `cache/` is excluded from version control to keep the repository lean; regenerate telemetry if required.
-- Keep `data/f1_emotions_data.json` checked in so reviewers can run the web app without Python tooling.
-- Call out in your interview materials that Abu Dhabi 2021 is just one example; the scoring model generalises to other sessions when supplied with matching raw inputs.
