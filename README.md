@@ -115,6 +115,9 @@ Below are the derived metrics visualised in the app.
 \end{aligned}
 ```
 
+*Wobble amplitude linked to Aggressiveness*
+
+![Aggressiveness visualization](public/Aggressiveness.webp)
 
 **Confidence**
 
@@ -131,6 +134,10 @@ Below are the derived metrics visualised in the app.
 \end{cases}
 \end{aligned}
 ```
+
+*Oscillation amplitude linked to Confidence*
+
+![Confidence visualization](public/Confidence.webp)
 
 **Frustration**
 
@@ -149,6 +156,10 @@ Below are the derived metrics visualised in the app.
 \end{aligned}
 ```
 
+*Orbital Speed linked to Frustration*
+
+![Frustration visualization](public/Frustration.webp)
+
 **Pressure**
 
 ```math
@@ -162,6 +173,10 @@ Below are the derived metrics visualised in the app.
 \end{aligned}
 ```
 
+*Thickness linked to Pressure*
+
+![Pressure visualization](public/Pressure.webp)
+
 **Risk Taking**
 
 ```math
@@ -174,6 +189,10 @@ Below are the derived metrics visualised in the app.
 &\times \text{compound\_risk\_factor}
 \end{aligned}
 ```
+
+*Particle shakiness linked to Risk-Taking*
+
+![Risk-taking visualization](public/Risk_Taking.webp)
 
 **Extra**
 
