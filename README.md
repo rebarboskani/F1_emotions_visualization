@@ -1,5 +1,7 @@
 ## F1 Driver Emotions Visualization
 
+![F1 Emotions Visualization](public/Intro.webp)
+
 Interactive recreation of the Abu Dhabi 2021 F1 emotions in a modern web stack. The app uses Next.js 16, React 19, and Three.js to render an orbiting particle ring for every driver and lap, translating telemetry-derived emotion metrics into colour, motion, and bloom intensity.
 
 - **Live exploration** – scrub through laps and see pressure, confidence, frustration, aggressiveness, and risk-taking values per driver.
@@ -102,73 +104,75 @@ Below are the derived metrics visualised in the app.
 **Aggressiveness**
 
 ```math
-\text{Aggressiveness\_Score} =
-0.25 \left( \frac{\text{avg\_throttle}}{100} \right)
-+ 0.15 \, \max\!\left(0.1, 1 - \frac{\text{tyre\_life}}{\text{expected\_tyre\_life}}\right)
-+ 0.2 \left( \frac{1}{\text{normalized\_corrected\_lap\_times}} \right)
-+ 0.2 \, e^{\frac{\text{avg\_distance\_to\_drive\_ahead}}{10}}
-+ 0.15 \, \frac{\min\!\left(1.0, 2 \times \text{DRS\_usage\_count}\right)}{\text{max\_possible\_DRS}}
-+ 0.3
-+ 0.05 \left(1 - \text{brake\_on\_time\_ratio}\right)
-+ 0.15 \, \min\!\left(1.0, 1 - \frac{\text{position} - 1}{\text{total\_drivers}}\right)
+\begin{aligned}
+\text{Aggressiveness\_Score} =&\; 0.25 \left( \frac{\text{avg\_throttle}}{100} \right) \\
+&+ 0.15 \, \max\!\left(0.1, 1 - \frac{\text{tyre\_life}}{\text{expected\_tyre\_life}}\right) \\
+&+ 0.2 \left( \frac{1}{\text{normalized\_corrected\_lap\_times}} \right) \\
+&+ 0.2 \, e^{\frac{\text{avg\_distance\_to\_drive\_ahead}}{10}} \\
+&+ 0.15 \, \frac{\min\!\left(1.0, 2 \times \text{DRS\_usage\_count}\right)}{\text{max\_possible\_DRS}} \\
+&+ 0.3 + 0.05 \left(1 - \text{brake\_on\_time\_ratio}\right) \\
+&+ 0.15 \, \min\!\left(1.0, 1 - \frac{\text{position} - 1}{\text{total\_drivers}}\right)
+\end{aligned}
 ```
 
 
 **Confidence**
 
 ```math
-\text{Confidence\_Score} =
-\max\!\left(0.1,\; 1 - \text{corrected\_lap\_variability}\right)
-\times \left(\frac{\text{avg\_throttle}}{100}\right)
-\times \max\!\left(0.1,\; \text{corrected\_sector\_consistency}\right)
-\times \max\!\left(0.1,\; 1 - \text{brake\_time\_variability}\right)
-\times \left(\frac{1}{1 + \text{tyre\_life}}\right)
-\times 
-\begin{cases}
+\begin{aligned}
+\text{Confidence\_Score} =&\; \max\!\left(0.1,\; 1 - \text{corrected\_lap\_variability}\right) \\
+&\times \left(\frac{\text{avg\_throttle}}{100}\right) \\
+&\times \max\!\left(0.1,\; \text{corrected\_sector\_consistency}\right) \\
+&\times \max\!\left(0.1,\; 1 - \text{brake\_time\_variability}\right) \\
+&\times \left(\frac{1}{1 + \text{tyre\_life}}\right) \\
+&\times \begin{cases}
 1, & \text{if no\_pit\_this\_lap} \\
 0.5, & \text{otherwise}
 \end{cases}
+\end{aligned}
 ```
 
 **Frustration**
 
 ```math
-\text{Frustration\_Score} =
-\max\!\left(0.1,\; \text{corrected\_lap\_time\_delta}\right)
-\times \max\!\left(0.1,\; \frac{\text{sector\_loss\_count}}{3}\right)
-\times \max\!\left(0.1,\; \frac{\text{brake\_application\_count}}{\text{lap\_distance}} \times \text{scaling\_factor}\right)
-\times \max\!\left(0.1,\; \frac{\text{gear\_shift\_inefficiency}}{\text{max\_gear\_shifts}}\right)
-\times
-\begin{cases}
+\begin{aligned}
+\text{Frustration\_Score} =&\; \max\!\left(0.1,\; \text{corrected\_lap\_time\_delta}\right) \\
+&\times \max\!\left(0.1,\; \frac{\text{sector\_loss\_count}}{3}\right) \\
+&\times \max\!\left(0.1,\; \frac{\text{brake\_application\_count}}{\text{lap\_distance}} \times \text{scaling\_factor}\right) \\
+&\times \max\!\left(0.1,\; \frac{\text{gear\_shift\_inefficiency}}{\text{max\_gear\_shifts}}\right) \\
+&\times \begin{cases}
 1.5, & \text{if pit\_this\_lap} \\
 1, & \text{otherwise}
-\end{cases}
-\times \max\!\left(1.0,\; \text{race\_control\_impact}\right)
-\times \text{championship\_pressure\_factor}
+\end{cases} \\
+&\times \max\!\left(1.0,\; \text{race\_control\_impact}\right) \\
+&\times \text{championship\_pressure\_factor}
+\end{aligned}
 ```
 
 **Pressure**
 
 ```math
-\text{Pressure\_Score} =
-\max\!\left(0.1,\; \frac{1}{1 + \text{distance\_to\_driver\_behind}}\right)
-\times \max\!\left(1.0,\; \text{track\_status\_penalty}\right)
-\times \min\!\left(2.0,\; \text{air\_temp\_factor} + \text{track\_temp\_factor}\right)
-\times \left(\frac{\text{tyre\_life}}{\text{expected\_tyre\_life} + 0.1}\right)
-\times \left(1 + \frac{\text{fuel\_penalty}}{\text{avg\_lap\_time}}\right)
-\times \left(1 + \frac{\text{position}}{\text{total\_drivers}}\right)
+\begin{aligned}
+\text{Pressure\_Score} =&\; \max\!\left(0.1,\; \frac{1}{1 + \text{distance\_to\_driver\_behind}}\right) \\
+&\times \max\!\left(1.0,\; \text{track\_status\_penalty}\right) \\
+&\times \min\!\left(2.0,\; \text{air\_temp\_factor} + \text{track\_temp\_factor}\right) \\
+&\times \left(\frac{\text{tyre\_life}}{\text{expected\_tyre\_life} + 0.1}\right) \\
+&\times \left(1 + \frac{\text{fuel\_penalty}}{\text{avg\_lap\_time}}\right) \\
+&\times \left(1 + \frac{\text{position}}{\text{total\_drivers}}\right)
+\end{aligned}
 ```
 
 **Risk Taking**
 
 ```math
-\text{Risk\_Taking\_Score} =
-\left(\frac{\text{max\_speed}}{\text{track\_avg\_speed}}\right)
-\times \max\!\left(0.1,\; \frac{\text{DRS\_usage\_count}}{\text{max\_possible\_DRS} + 1}\right)
-\times \left(\frac{\text{avg\_RPM}}{\text{max\_RPM}}\right)
-\times \max\!\left(0.1,\; \frac{\text{brake\_application\_count}}{\text{lap\_distance}} \times \text{scaling\_factor}\right)
-\times \max\!\left(0.1,\; \frac{1}{\text{corrected\_sector\_time\_variability} + 0.1}\right)
-\times \text{compound\_risk\_factor}
+\begin{aligned}
+\text{Risk\_Taking\_Score} =&\; \left(\frac{\text{max\_speed}}{\text{track\_avg\_speed}}\right) \\
+&\times \max\!\left(0.1,\; \frac{\text{DRS\_usage\_count}}{\text{max\_possible\_DRS} + 1}\right) \\
+&\times \left(\frac{\text{avg\_RPM}}{\text{max\_RPM}}\right) \\
+&\times \max\!\left(0.1,\; \frac{\text{brake\_application\_count}}{\text{lap\_distance}} \times \text{scaling\_factor}\right) \\
+&\times \max\!\left(0.1,\; \frac{1}{\text{corrected\_sector\_time\_variability} + 0.1}\right) \\
+&\times \text{compound\_risk\_factor}
+\end{aligned}
 ```
 
 **Extra**
