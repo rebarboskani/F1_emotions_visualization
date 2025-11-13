@@ -128,6 +128,7 @@ Below are the derived metrics visualised in the app.
 1, & \text{if no\_pit\_this\_lap} \\
 0.5, & \text{otherwise}
 \end{cases}
+```
 
 **Frustration**
 
@@ -144,6 +145,7 @@ Below are the derived metrics visualised in the app.
 \end{cases}
 \times \max\!\left(1.0,\; \text{race\_control\_impact}\right)
 \times \text{championship\_pressure\_factor}
+```
 
 **Pressure**
 
@@ -155,6 +157,7 @@ Below are the derived metrics visualised in the app.
 \times \left(\frac{\text{tyre\_life}}{\text{expected\_tyre\_life} + 0.1}\right)
 \times \left(1 + \frac{\text{fuel\_penalty}}{\text{avg\_lap\_time}}\right)
 \times \left(1 + \frac{\text{position}}{\text{total\_drivers}}\right)
+```
 
 **Risk Taking**
 
@@ -166,11 +169,12 @@ Below are the derived metrics visualised in the app.
 \times \max\!\left(0.1,\; \frac{\text{brake\_application\_count}}{\text{lap\_distance}} \times \text{scaling\_factor}\right)
 \times \max\!\left(0.1,\; \frac{1}{\text{corrected\_sector\_time\_variability} + 0.1}\right)
 \times \text{compound\_risk\_factor}
+```
 
 **Extra**
 
 | **Data Type** | **Calculation Logic** |
-|----------------|------------------------|
+|---------------|----------------------|
 | `avg_throttle` | Average throttle percentage over telemetry samples in the lap. |
 | `expected_tire_life` | Predefined constant based on compound and track (e.g., 15 laps for soft). |
 | `corrected_lap_time` | `LapTime_sec - fuel_penalty - tire_deg_penalty`, where `fuel_penalty = 0.035 * remaining_fuel_mass`, `tire_deg_penalty = d[compound] * TireLife`. |
