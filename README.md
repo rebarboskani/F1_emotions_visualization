@@ -192,7 +192,7 @@ Below are the derived metrics visualised in the app.
 
 *Particle shakiness linked to Risk-Taking*
 
-![Risk-taking visualization](public/Risk_Taking.webp)
+![Risk-taking visualization](public/Risk-Taking.webp)
 
 **Extra**
 
