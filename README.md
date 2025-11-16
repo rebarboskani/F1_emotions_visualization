@@ -2,11 +2,9 @@
 
 ![F1 Emotions Visualization](public/Intro.webp)
 
-Interactive recreation of the Abu Dhabi 2021 F1 emotions in a modern web stack. The app uses Next.js 16, React 19, and Three.js to render an orbiting particle ring for every driver and lap, translating telemetry-derived emotion metrics into colour, motion, and bloom intensity.
 
-- **Live exploration** – scrub through laps and see pressure, confidence, frustration, aggressiveness, and risk-taking values per driver.
-- **GPU-accelerated scene** – additive particle system with 20k particles + 2k sparks per driver, bloom post-processing, and OrbitControls.
-- **Full data pipeline** – A single Python script downloads telemetry via FastF1, computes emotion scores, and stores the JSON the frontend consumes.
+This is a 3D interactive data visualization of Formula 1 races. It uses telemetry data, injects it into 5 mathematical models to drive 5 emotions (pressure, confidence, frustration, aggressiveness, and risk-taking), and visualizes these emotions through a particle ring system. The end result is meant to be an artistic interpretation of Formula 1 data.
+
 
 ---
 
@@ -27,6 +25,7 @@ Interactive recreation of the Abu Dhabi 2021 F1 emotions in a modern web stack. 
    - builds concentric particle rings per driver,
    - maps emotion values to rotation, wobble, shake, thickness, and colour variations,
    - exposes a lap dropdown, per-driver stats, and fallback messaging.
+   - cinematic mode with soundscape
 3. Emotion updates are applied by mutating buffer attributes each animation frame for 60fps performance.
 
 ---
@@ -37,8 +36,7 @@ Interactive recreation of the Abu Dhabi 2021 F1 emotions in a modern web stack. 
 
 1. Downloads the requested session directly from FastF1 (laps, car telemetry, race control events).
 2. Calculates the five emotion scores using telemetry features such as tyre wear, throttle smoothness, position deltas, and DRS usage (logic matches the diagrams below).
-3. Normalises scores per lap and writes `data/f1_emotions_data.json` in the exact shape expected by the frontend.
-4. Progress bars (via `tqdm`) show driver/lap processing status in the terminal.
+3. Normalises scores per lap and writes `data/f1_emotions_data.json`
 
 ---
 
@@ -56,19 +54,6 @@ npm run dev
 ```
 
 Visit `http://localhost:3000` and use the lap selector to explore the scene.
-
-Production build:
-
-```bash
-npm run build
-npm run start
-```
-
-Linting:
-
-```bash
-npm run lint
-```
 
 ---
 
@@ -92,8 +77,8 @@ python src/generator.py --year 2022 --event "Saudi Arabian" --session R --output
 ```
 
 Outputs:
-- Fresh `data/f1_emotions_data.json` for the frontend (identical schema to the committed sample).
-- Cached FastF1 responses under `cache/` for faster reruns (ignored by Git).
+- Fresh `data/f1_emotions_data.json` for the frontend.
+- Cached FastF1 responses under `cache/` for faster reruns.
 
 ---
 
